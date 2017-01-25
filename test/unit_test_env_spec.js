@@ -20,6 +20,14 @@ describe('Unit::deployable-test::TestEnv', function(){
       TestEnv.init( output_path )
     })
 
+    it('should expose path.join as join', function(){
+      expect( TestEnv.join('test','a') ).to.equal( `test${path.sep}a` )
+    })
+    it('should expose path.resolve as resolve', function(){
+      expect( TestEnv.resolve(test_path,'a') ).to.equal( `${test_path}${path.sep}a` )
+    })
+
+
     it('should guess at a path when not (taking node_modules/deployable-test into consideration)', function(){
       TestEnv.init()
       let parentpath = path.resolve(__dirname, '..', '..')
@@ -88,10 +96,36 @@ describe('Unit::deployable-test::TestEnv', function(){
 
       it('should fail to clean something outside our path', function(){
         let p = TestEnv.cleanAsync('/tmp/non-existant-thing/134a24z94r24U1')
-        return expect( p ).to.be.rejectedWith(Error)
+        return expect( p ).to.be.rejectedWith(/clean outside of project without force/)
+      })
+
+      it('should fail to clean something outside our path', function(){
+        let p = TestEnv.clean('/tmp/non-existant-thing/134a24z94r24U1')
+        return expect( p ).to.be.rejectedWith(/clean outside of project without force/)
+      })
+
+      it('should fail to clean something outside our path', function(){
+        let p = TestEnv.cleanAsync()
+        return expect( p ).to.be.rejectedWith(/No dir to clean/)
+      })
+
+      it(`should fail to clean a path that's not a string`, function(){
+        let p = TestEnv.cleanAsync([])
+        return expect( p ).to.be.rejectedWith(/directory must be a string/)
+      })
+
+      it('should fail to clean output without an arg', function(){
+        let p = TestEnv.cleanOutputAsync()
+        return expect( p ).to.be.rejectedWith(/No subdir to clean/)
+      })
+
+      it('should clean the whole output dir', function(){
+        let p = TestEnv.cleanAllOutputAsync()
+        return expect( p ).to.be.become( path.join(output_path, 'output') )
       })
 
     })
+
 
     describe('fs', function(){
 
