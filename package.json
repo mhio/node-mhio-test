@@ -1,0 +1,39 @@
+{
+  "name": "deployable-test",
+  "version": "0.1.0",
+  "description": "Node Test Environment Helpers",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha",
+    "test:debug": "DEBUG='*' mocha debug",
+    "test:coverage": "istanbul cover _mocha && istanbul check-coverage",
+    "npm:pubtest": "set -uex; npm test; npm version prerelease; npm publish --tag testing",
+    "npm:publish": "set -uex; npm run test:coverage; [ -z \"$(git status --porcelain)\" ]; npm version patch; git push; npm publish; git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deployable/node-deployable-test.git"
+  },
+  "keywords": [
+    "deployable",
+    "module",
+    "test",
+    "helpers"
+  ],
+  "author": "Matt Hoyle <code aatt deployable.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deployable/node-deployable-test/issues"
+  },
+  "homepage": "https://github.com/deployable/deployable-test#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "~0.4.5",
+    "mocha": "^3.1.2"
+  },
+  "dependencies": {
+    "bluebird": "^3.0.1",
+    "debug": "^2",
+    "fs-extra": "^2.0.0"
+  }
+}
