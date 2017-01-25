@@ -20,11 +20,6 @@ describe('Unit::deployable-test::TestEnv', function(){
       TestEnv.init( output_path )
     })
 
-    after(function(){
-      // clean up output `output_path`
-      return fse.removeAsync( output_path )
-    })
-
     it('should guess at a path when not (taking node_modules/deployable-test into consideration)', function(){
       TestEnv.init()
       let parentpath = path.resolve(__dirname, '..', '..')
@@ -68,62 +63,95 @@ describe('Unit::deployable-test::TestEnv', function(){
     })
 
 
-    it('should make an output directory `output/test1`', function(){
-      let testpath = path.resolve(output_path, 'output', 'test1')
-      return TestEnv.mkdirOutputAsync('test1').then(()=> {
-        expect(testpath).to.be.a.directory().and.empty
+    describe('fs DEBUG_CLEAN', function(){
+
+      let orig = process.env.DEBUG_CLEAN
+
+      before(function(){
+        process.env.DEBUG_CLEAN = 'true'
       })
+
+      after(function(){
+        ( orig === undefined )
+          ? delete process.env.DEBUG_CLEAN
+          : process.env.DEBUG_CLEAN = orig
+      })
+
+      it('should clean an output directory `output/test2`', function(){
+        let testpath = path.resolve(output_path, 'output', 'test2')
+        expect(testpath).to.not.be.a.path('before')
+        return TestEnv.cleanOutputAsync('test2').then(file => {
+          expect(file).to.equal(testpath)
+          expect(testpath).to.not.be.a.path('after')
+        })
+      })
+
     })
 
-    it('should clean an output directory `output/test2`', function(){
-      let testpath = path.resolve(output_path, 'output', 'test2')
-      expect(testpath).to.not.be.a.path('before')
-      return TestEnv.mkdirOutputAsync('test2').then(()=>{
-        expect(testpath).to.be.a.directory()
-        return TestEnv.cleanOutputAsync('test2')
-      }).then(()=>{
-        expect(testpath).to.not.be.a.path('after')
+    describe('fs', function(){
+
+      after(function(){
+        // clean up output `output_path`
+        return fse.removeAsync( output_path )
       })
-    })
 
-
-    it('should make a tmp output directory', function(){
-      let testpath = path.resolve(output_path, 'output', 'tmp-cd')
-      expect(testpath).to.not.be.a.path()
-      return TestEnv.mkdirOutputTmpAsync('cd').then(()=>{
-        expect(testpath).to.be.a.directory()
+      it('should make an output directory `output/test1`', function(){
+        let testpath = path.resolve(output_path, 'output', 'test1')
+        return TestEnv.mkdirOutputAsync('test1').then(()=> {
+          expect(testpath).to.be.a.directory().and.empty
+        })
       })
-    })
 
-    it('should clean a tmp output directory', function(){
-      let testpath = path.resolve(output_path, 'output', 'tmp-ef')
-      expect(testpath).to.not.be.a.path('before')
-      return TestEnv.mkdirOutputTmpAsync('ef').then((temp_file)=> {
-        debug('temp_file',temp_file)
-        expect(testpath).to.be.a.directory()
-        return TestEnv.cleanOutputTmpAsync('ef')
-      }).then(()=>{
-        expect(testpath).to.not.be.a.path('after')
+      it('should clean an output directory `output/test2`', function(){
+        let testpath = path.resolve(output_path, 'output', 'test2')
+        expect(testpath).to.not.be.a.path('before')
+        return TestEnv.mkdirOutputAsync('test2').then(()=>{
+          expect(testpath).to.be.a.directory()
+          return TestEnv.cleanOutputAsync('test2')
+        }).then(()=>{
+          expect(testpath).to.not.be.a.path('after')
+        })
       })
-    })
 
-    it('should clean all tmp output directories', function(){
-      let testtmppath = path.resolve(output_path, 'output', 'tmp-gh')
-      let testpath = path.resolve(output_path, 'output', 'whatever')
-      return Promise.all([
-        TestEnv.mkdirOutputAsync('whatever'),
-        TestEnv.mkdirOutputTmpAsync(),
-        TestEnv.mkdirOutputTmpAsync('gh')
-      ]).then(()=>{
-        expect(testtmppath).to.be.a.directory()
-        expect(testpath).to.be.a.directory()
-        return TestEnv.cleanAllOutputTmpAsync()
-      }).then(()=>{
-        expect(testtmppath).to.not.be.a.path()
+
+      it('should make a tmp output directory', function(){
+        let testpath = path.resolve(output_path, 'output', 'tmp-cd')
         expect(testpath).to.not.be.a.path()
+        return TestEnv.mkdirOutputTmpAsync('cd').then(()=>{
+          expect(testpath).to.be.a.directory()
+        })
       })
-    })
 
+      it('should clean a tmp output directory', function(){
+        let testpath = path.resolve(output_path, 'output', 'tmp-ef')
+        expect(testpath).to.not.be.a.path('before')
+        return TestEnv.mkdirOutputTmpAsync('ef').then((temp_file)=> {
+          debug('temp_file',temp_file)
+          expect(testpath).to.be.a.directory()
+          return TestEnv.cleanOutputTmpAsync('ef')
+        }).then(()=>{
+          expect(testpath).to.not.be.a.path('after')
+        })
+      })
+
+      it('should clean all tmp output directories', function(){
+        let testtmppath = path.resolve(output_path, 'output', 'tmp-gh')
+        let testpath = path.resolve(output_path, 'output', 'whatever')
+        return Promise.all([
+          TestEnv.mkdirOutputAsync('whatever'),
+          TestEnv.mkdirOutputTmpAsync(),
+          TestEnv.mkdirOutputTmpAsync('gh')
+        ]).then(()=>{
+          expect(testtmppath).to.be.a.directory()
+          expect(testpath).to.be.a.directory()
+          return TestEnv.cleanAllOutputTmpAsync()
+        }).then(()=>{
+          expect(testtmppath).to.not.be.a.path()
+          expect(testpath).to.not.be.a.path()
+        })
+      })
+
+    })
   })
 
 })
