@@ -86,6 +86,11 @@ describe('Unit::deployable-test::TestEnv', function(){
         })
       })
 
+      it('should fail to clean something outside our path', function(){
+        let p = TestEnv.cleanAsync('/tmp/non-existant-thing/134a24z94r24U1')
+        return expect( p ).to.be.rejectedWith(Error)
+      })
+
     })
 
     describe('fs', function(){
@@ -135,19 +140,22 @@ describe('Unit::deployable-test::TestEnv', function(){
       })
 
       it('should clean all tmp output directories', function(){
+        let testpath_whatever = path.resolve(output_path, 'output', 'whatever')
         let testtmppath = path.resolve(output_path, 'output', 'tmp-gh')
-        let testpath = path.resolve(output_path, 'output', 'whatever')
         return Promise.all([
           TestEnv.mkdirOutputAsync('whatever'),
           TestEnv.mkdirOutputTmpAsync(),
           TestEnv.mkdirOutputTmpAsync('gh')
-        ]).then(()=>{
+        ])
+        .then((res)=>{
+          expect(testpath_whatever).to.be.a.directory()
+          expect(res[1]).to.be.a.directory()
           expect(testtmppath).to.be.a.directory()
-          expect(testpath).to.be.a.directory()
           return TestEnv.cleanAllOutputTmpAsync()
-        }).then(()=>{
-          expect(testtmppath).to.not.be.a.path()
-          expect(testpath).to.not.be.a.path()
+        })
+        .then(()=>{
+          expect(testpath_whatever).to.be.a.directory('whatever stays')
+          expect(testtmppath).to.not.be.a.path('cleaned')
         })
       })
 
