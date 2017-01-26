@@ -23,14 +23,14 @@ describe('Unit::deployable-test::TestEnv', function(){
     it('should expose path.join as join', function(){
       expect( TestEnv.join('test','a') ).to.equal( `test${path.sep}a` )
     })
+
     it('should expose path.resolve as resolve', function(){
       expect( TestEnv.resolve(test_path,'a') ).to.equal( `${test_path}${path.sep}a` )
     })
 
-
-    it('should guess at a path when not (taking node_modules/deployable-test into consideration)', function(){
+    it('should guess at a path when not given (taking node_modules/deployable-test/lib into consideration)', function(){
       TestEnv.init()
-      let parentpath = path.resolve(__dirname, '..', '..')
+      let parentpath = path.resolve(__dirname, '..', '..', '..')
       expect( TestEnv.fixturePath('somesubdir') ).to.equal( path.join(parentpath, 'test', 'fixture', 'somesubdir') )
     })
 
