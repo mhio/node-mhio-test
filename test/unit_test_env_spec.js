@@ -8,13 +8,16 @@ require('chai').use(require('chai-fs'))
 
 const { TestEnv } = require('../')
 
+let test_path = path.join(__dirname, 'output')
+let test_fixture_path = path.join(__dirname, 'fixture')
+let output_path = path.join(test_path, require('crypto').randomBytes(2).toString('hex') )
+let output_fixture_path = path.join(output_path, 'fixture')
+let output_output_path = path.join(output_path, 'output')
 
 describe('Unit::deployable-test::TestEnv', function(){
 
   describe('Class', function(){
 
-    let test_path = path.join(__dirname, 'output')
-    let output_path = path.join(test_path, require('crypto').randomBytes(2).toString('hex') )
 
     beforeEach(function(){
       TestEnv.init( output_path )
@@ -62,12 +65,12 @@ describe('Unit::deployable-test::TestEnv', function(){
     })
 
     it('should return the same path if not a test path', function(){
-      expect( TestEnv.removeTmpPrefix('ab') ).to.equal('ab')
+      expect( TestEnv.removeTmpPrefixFromPath('ab') ).to.equal('ab')
     })
 
     it('should return a tmp path without the tmp-', function(){
       let tmppath = TestEnv.tmpOutputPath()
-      expect( TestEnv.removeTmpPrefix(tmppath) ).to.match(/^[0-9a-f]{5}$/)
+      expect( TestEnv.removeTmpPrefixFromPath(tmppath) ).to.match(/^[0-9a-f]{5}$/)
     })
 
 
@@ -131,6 +134,7 @@ describe('Unit::deployable-test::TestEnv', function(){
 
       after(function(){
         // clean up output `output_path`
+        if ( process.env.DEBUG_CLEAN ) return output_path
         return fse.removeAsync( output_path )
       })
 
@@ -193,6 +197,31 @@ describe('Unit::deployable-test::TestEnv', function(){
         })
       })
 
+
+      describe('copies', function(){
+
+
+        before(function(){
+          debug('copies before copy', test_fixture_path, output_fixture_path)
+          return fse.copyAsync(test_fixture_path, output_fixture_path)
+        })
+
+        it('should copy fixture files to a tmp output dir', function(){
+          return TestEnv.copyFixtureToTmpOutputAsync('copy').then(res => {
+            // use res as the tmp path is random
+            expect( res ).to.be.a.directory()
+            expect( path.join(res,'test1' )).to.be.a.file()
+          })
+        })
+
+        it('should copy fixture files to an output dir', function(){
+        let copied_file = path.join(output_output_path, 'copyoutsuf', 'test1')
+          return TestEnv.copyFixtureToOutputAsync('copy', 'copyoutsuf').then(() => {
+            expect(copied_file).to.be.a.file()
+          })
+        })
+
+      })
     })
   })
 
