@@ -88,7 +88,7 @@ describe('Unit::deployable-test::TestEnv', function(){
           : process.env.DEBUG_CLEAN = orig
       })
 
-      it('should clean an output directory `output/test2`', function(){
+      it('should clean an output directory `output/test2` via .cleanOutputAsync', function(){
         let testpath = path.resolve(output_path, 'output', 'test2')
         expect(testpath).to.not.be.a.path('before')
         return TestEnv.cleanOutputAsync('test2').then(file => {
@@ -107,22 +107,22 @@ describe('Unit::deployable-test::TestEnv', function(){
         return expect( p ).to.be.rejectedWith(/clean outside of project without force/)
       })
 
-      it('should fail to clean something outside our path', function(){
+      it('should fail to clean something outside our path .cleanAsync', function(){
         let p = TestEnv.cleanAsync()
         return expect( p ).to.be.rejectedWith(/No dir to clean/)
       })
 
-      it(`should fail to clean a path that's not a string`, function(){
+      it(`should fail to clean a path that's not a string via .cleanAsync`, function(){
         let p = TestEnv.cleanAsync([])
         return expect( p ).to.be.rejectedWith(/directory must be a string/)
       })
 
-      it('should fail to clean output without an arg', function(){
+      it('should fail to clean output without an arg to cleanOutputAsync', function(){
         let p = TestEnv.cleanOutputAsync()
         return expect( p ).to.be.rejectedWith(/No subdir to clean/)
       })
 
-      it('should clean the whole output dir', function(){
+      it('should clean the whole output dir with cleanAllOutputAsync', function(){
         let p = TestEnv.cleanAllOutputAsync()
         return expect( p ).to.be.become( path.join(output_path, 'output') )
       })
@@ -138,14 +138,14 @@ describe('Unit::deployable-test::TestEnv', function(){
         return fse.removeAsync( output_path )
       })
 
-      it('should make an output directory `output/test1`', function(){
+      it('should make an output directory `output/test1` with mkdirOutputAsync', function(){
         let testpath = path.resolve(output_path, 'output', 'test1')
         return TestEnv.mkdirOutputAsync('test1').then(()=> {
           expect(testpath).to.be.a.directory().and.empty
         })
       })
 
-      it('should clean an output directory `output/test2`', function(){
+      it('should clean an output directory `output/test2` with cleanOutputAsync', function(){
         let testpath = path.resolve(output_path, 'output', 'test2')
         expect(testpath).to.not.be.a.path('before')
         return TestEnv.mkdirOutputAsync('test2').then(()=>{
@@ -157,7 +157,7 @@ describe('Unit::deployable-test::TestEnv', function(){
       })
 
 
-      it('should make a tmp output directory', function(){
+      it('should make a tmp output directory with mkdirOutputTmpAsync', function(){
         let testpath = path.resolve(output_path, 'output', 'tmp-cd')
         expect(testpath).to.not.be.a.path()
         return TestEnv.mkdirOutputTmpAsync('cd').then(()=>{
@@ -165,7 +165,7 @@ describe('Unit::deployable-test::TestEnv', function(){
         })
       })
 
-      it('should clean a tmp output directory', function(){
+      it('should clean a tmp output directory with cleanOutputTmpAsync', function(){
         let testpath = path.resolve(output_path, 'output', 'tmp-ef')
         expect(testpath).to.not.be.a.path('before')
         return TestEnv.mkdirOutputTmpAsync('ef').then((temp_file)=> {
@@ -177,7 +177,7 @@ describe('Unit::deployable-test::TestEnv', function(){
         })
       })
 
-      it('should clean all tmp output directories', function(){
+      it('should clean all tmp output directories with cleanAllOutputTmpAsync', function(){
         let testpath_whatever = path.resolve(output_path, 'output', 'whatever')
         let testtmppath = path.resolve(output_path, 'output', 'tmp-gh')
         return Promise.all([
