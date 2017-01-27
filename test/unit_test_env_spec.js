@@ -200,7 +200,6 @@ describe('Unit::deployable-test::TestEnv', function(){
 
       describe('copies', function(){
 
-
         before(function(){
           debug('copies before copy', test_fixture_path, output_fixture_path)
           return fse.copyAsync(test_fixture_path, output_fixture_path)
