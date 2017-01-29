@@ -1,10 +1,8 @@
+/* global expect */
 const debug = require('debug')('dply:test:unit:test_env')
 const Promise = require('bluebird')
 const fse = Promise.promisifyAll(require('fs-extra'))
 const path = require('path')
-
-const expect = require('chai').expect
-require('chai').use(require('chai-fs'))
 
 const { TestEnv } = require('../')
 
@@ -14,10 +12,10 @@ let output_path = path.join(test_path, require('crypto').randomBytes(2).toString
 let output_fixture_path = path.join(output_path, 'fixture')
 let output_output_path = path.join(output_path, 'output')
 
+
 describe('Unit::deployable-test::TestEnv', function(){
 
   describe('Class', function(){
-
 
     beforeEach(function(){
       TestEnv.init( output_path )

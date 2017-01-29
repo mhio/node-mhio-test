@@ -6,9 +6,9 @@ Node Test Environment Helpers
 
 ## Install
  
-    npm install deployable-test --save
+    npm install deployable-test --save-dev
 
-    yarn add deployable-test
+    yarn add deployable-test --dev
 
 ## Usage
 
