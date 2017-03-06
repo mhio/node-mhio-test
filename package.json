@@ -1,5 +1,5 @@
 {
-  "name": "deployable-test",
+  "name": "@deployable/test",
   "version": "0.0.4",
   "description": "Node Test Environment Helpers",
   "main": "lib/index.js",
@@ -7,8 +7,8 @@
     "test": "mocha",
     "test:debug": "DEBUG='*' mocha debug",
     "test:coverage": "istanbul cover _mocha && istanbul check-coverage",
-    "release:test": "set -uex; npm test; npm version prerelease; npm publish --tag testing",
-    "release:patch": "set -uex; npm run test:coverage; [ -z \"$(git status --porcelain)\" ]; npm version patch; git push; npm publish; git push --tags"
+    "release:test": "set -uex; yarn test; npm version prerelease; npm publish --tag testing --access public",
+    "release:patch": "set -uex; yarn run test:coverage; npm version patch; git push; npm publish --access public; git push --tags"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
   "bugs": {
     "url": "https://github.com/deployable/node-deployable-test/issues"
   },
-  "homepage": "https://github.com/deployable/deployable-test#readme",
+  "homepage": "https://github.com/deployable/node-deployable-test#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
