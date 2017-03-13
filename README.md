@@ -100,43 +100,55 @@ TestEnv.randomHex(5)
 // = 'c8fd2'
 ```
 
-#### `clean(dir)`
+----
+#### `cleanAsync(dir)`
 
 Promise to clean a directory that must be inside the base path.
 
-`DEBUG_CLEAN` makes this skip the rm
+`DEBUG_CLEAN` makes this skip the removals
 
 
 #### `cleanAllOutputAsync()`
 
 Promise to clean everything in the `output/` dir
 
+`DEBUG_CLEAN` makes this skip the removals
+
 
 #### `cleanOutputAsync(subdir)`
 
 Promise to clean a named `output/subdir`
+
+`DEBUG_CLEAN` makes this skip the removals
 
 
 #### `cleanAllOutputTmpAsync()`
 
 Promise to clean any `tmp-*` dirs created (Named with `tmp_output_dir_prefix`)
 
+`DEBUG_CLEAN` makes this skip the removals
+
 
 #### `cleanOutputTmpAsync(suffix)`
 
 Promise to clean a named `output/tmp-suffix` dir
 
+`DEBUG_CLEAN` makes this skip the removals
 
+
+----
 #### `mkdirOutputAsync(...args)`
 
 Promise to make the named directorys in `output/`.
 
 
+----
 #### `mkdirOutputTmpAsync(suffix)`
 
 Promise to make a temp directory `output/tmp-${suffix}`.
 
 
+----
 #### `removeTmpPrefixFromPath(tmppath)`
 
 Remove the current temp directory from a path
@@ -146,16 +158,19 @@ TestEnv.removeTmpPrefixFromPath('/project/test/output/tmp-output/whatever')
 // = 'output/whatever'
 ```
 
+----
 #### `copyAsync(src, dest, options)`
 
 Promise to copt a directory to a destination
 
 
+----
 #### `copyFixtureToTmpOutputAsync(fixture_suffix)`
 
 Promise to copy a `fixture/` path to `output/tmp-{random}`
 
 
+----
 #### `copyFixtureToOutputAsync(fixture_suffix, output_suffix)`
 
 Promise to copy a `fixture/` path to `output/`
