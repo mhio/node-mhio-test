@@ -32,6 +32,12 @@ DEBUG_CLEAN=true mocha -b
 
 ## API
 
+- [init()](https://github.com/deployable/node-deployable-test#testenvinit-test_dir-)
+- [basePath()](https://github.com/deployable/node-deployable-test#basepathargs)
+- [fixturePath()](https://github.com/deployable/node-deployable-test#fixturepathargs)
+- [outputPath()](https://github.com/deployable/node-deployable-test#outputpathargs)
+- [tmpOutputPath()](https://github.com/deployable/node-deployable-test#tmpoutputpathsuffix-extras)
+
 #### `TestEnv.init( test_dir )`
 
 Requires the path to your `test` directory that your
@@ -57,11 +63,13 @@ Options:
     The prefix used for a temp dirs in output. Defaults to `tmp-`
 
 
+----
 #### `basePath(...args)`
 
 Return a directory path from TestEnv `base_path`.
 Joins all arguments with `path.join`
 
+----
 #### `fixturePath(...args)`
 
 Return a directory path from the `fixture/` path
@@ -72,6 +80,7 @@ TestEnv.fixturePath('a', 'b')
 // = '/project/test/fixture/a/b'
 ```
 
+----
 #### `outputPath(...args)`
 
 Return a directory from the `output/` path
@@ -82,6 +91,7 @@ TestEnv.outputPath('one', 'two')
 // = '/project/test/output/one/two'
 ```
 
+----
 #### `tmpOutputPath(suffix, ...extras)`
 
 Return a random tmp dir path in the output path
@@ -91,6 +101,7 @@ TestEnv.tmpOutputPath('blah', 'one', 'two')
 // = '/project/test/output/tmp-blah/one/two'
 ```
 
+----
 #### `randomHex(n)`
 
 Create a random hex string n chars long
@@ -108,6 +119,7 @@ Promise to clean a directory that must be inside the base path.
 `DEBUG_CLEAN` makes this skip the removals
 
 
+----
 #### `cleanAllOutputAsync()`
 
 Promise to clean everything in the `output/` dir
@@ -115,6 +127,7 @@ Promise to clean everything in the `output/` dir
 `DEBUG_CLEAN` makes this skip the removals
 
 
+----
 #### `cleanOutputAsync(subdir)`
 
 Promise to clean a named `output/subdir`
@@ -122,6 +135,7 @@ Promise to clean a named `output/subdir`
 `DEBUG_CLEAN` makes this skip the removals
 
 
+----
 #### `cleanAllOutputTmpAsync()`
 
 Promise to clean any `tmp-*` dirs created (Named with `tmp_output_dir_prefix`)
@@ -129,6 +143,7 @@ Promise to clean any `tmp-*` dirs created (Named with `tmp_output_dir_prefix`)
 `DEBUG_CLEAN` makes this skip the removals
 
 
+----
 #### `cleanOutputTmpAsync(suffix)`
 
 Promise to clean a named `output/tmp-suffix` dir
