@@ -72,7 +72,6 @@ Joins all arguments with `path.join`
 ```
 TestEnv.fixturePath('a', 'b')
 // = '/project/test/fixture/a/b'
-
 ```
 
 #### `outputPath(...args)`
@@ -83,7 +82,6 @@ Joins all arguments with `path.join`
 ```
 TestEnv.outputPath('one', 'two')
 // = '/project/test/output/one/two'
-
 ```
 
 #### `tmpOutputPath(suffix, ...extras)`
@@ -93,7 +91,6 @@ Return a random tmp dir path in the output path
 ```
 TestEnv.tmpOutputPath('blah', 'one', 'two')
 // = '/project/test/output/tmp-blah/one/two'
-
 ```
 
 #### `randomHex(n)`
@@ -103,7 +100,6 @@ Create a random hex string n chars long
 ```
 TestEnv.randomHex(5)
 // = 'c8fd2'
-
 ```
 
 #### `clean(dir)`
