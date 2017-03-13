@@ -1,8 +1,11 @@
 # [Deployable Test Helpers](https://github.com/deployable/node-deployable-test)
 
-## Title
+## @deployable/test
 
-Node Test Environment Helpers
+Collection of Node.js Test Helpers.
+
+`TestEnv` allows setup up a read/write environment that can be easily cleaned up
+after a test run.
 
 ## Install
 
@@ -16,7 +19,9 @@ Node Test Environment Helpers
 
 const { TestEnv } = require('@deployable/test')
 TestEnv.init(__dirname) // Should contains `fixture` and `output`
-TestEnv.fixturePath('something') //=> /users/you/project/test/fixture/something
+let test_path = TestEnv.outputPath('something') //=> /users/you/project/test/output/something
+// ... do tests
+TestEnv.cleanOutput()
 
 ```
 
