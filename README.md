@@ -37,7 +37,19 @@ DEBUG_CLEAN=true mocha -b
 - [fixturePath()](https://github.com/deployable/node-deployable-test#fixturepathargs)
 - [outputPath()](https://github.com/deployable/node-deployable-test#outputpathargs)
 - [tmpOutputPath()](https://github.com/deployable/node-deployable-test#tmpoutputpathsuffix-extras)
-
+- [randomHex()]()
+- [cleanAsync()]()
+- [cleanAllOutputAsync()]()
+- [cleanOutputAsync()]()
+- [cleanAllOutputTmpAsync()]()
+- [cleanOutputTmpAsync()]()
+- [mkdirOutputAsync()]()
+- [mkdirOutputTmpAsync()]()
+- [removeTmpPrefixFromPath()]()
+- [copyAsync()]()
+- [copyFixtureToTmpOutputAsync()]()
+- [copyFixtureToOutputAsync()]()
+----
 #### `TestEnv.init( test_dir )`
 
 Requires the path to your `test` directory that your
