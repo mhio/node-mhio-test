@@ -214,7 +214,7 @@ TestEnv.copyFixtureToOutputAsync('config', 'somedir')
 
 @deployable/test is released under the MIT license.
 
-Copyright 2016 Matt Hoyle - code at deployable.co
+Copyright 2017 Matt Hoyle - code at deployable.co
 
 https://github.com/deployable/node-deployable-test
 
