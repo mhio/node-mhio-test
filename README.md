@@ -4,7 +4,7 @@
 
 Collection of Node.js Test Helpers.
 
-`TestEnv` allows setup up a read/write environment that can be easily cleaned up
+`TestEnv` sets up up a read/write environment that can be easily cleaned up
 after a test run.
 
 ## Install
@@ -18,9 +18,9 @@ after a test run.
 ```javascript
 
 const { TestEnv } = require('@deployable/test')
-TestEnv.init(__dirname) // Should contains `fixture` and `output`
-let test_path = TestEnv.outputPath('something') //=> /users/you/project/test/output/something
-// ... do tests
+TestEnv.init(__dirname)                    // Should contain `fixture` and `output`
+let test_path = TestEnv.outputPath('bits') //=> /users/you/project/test/output/bits
+// ... do tests in `test_path`
 TestEnv.cleanOutput()
 
 ```
