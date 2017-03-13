@@ -34,7 +34,7 @@ DEBUG_CLEAN=true mocha -b
 
 ## API
 
-### `TestEnv.init( test_dir )`
+#### `TestEnv.init( test_dir )`
 
 Requires the path to your `test` directory that your
 `fixture` and `output` directories live under.
@@ -59,67 +59,117 @@ Options:
     The prefix used for a temp dirs in output. Defaults to `tmp-`
 
 
-### `basePath(...args)`
+#### `basePath(...args)`
 
-Return a dir from `base_path` dir
+Return a directory path from TestEnv `base_path`.
+Joins all arguments with `path.join`
 
-### `fixturePath(...args)`
+#### `fixturePath(...args)`
 
-Return a dir path in the fixtures path
+Return a directory path from the `fixture/` path
+Joins all arguments with `path.join`
 
-### `outputPath(...args)`
+```
+TestEnv.fixturePath('a', 'b')
+// = '/project/test/fixture/a/b'
 
-Return a dir path in the output path
+```
 
-### `tmpOutputPath(suffix, ...extras)`
+#### `outputPath(...args)`
+
+Return a directory from the `output/` path
+Joins all arguments with `path.join`
+
+```
+TestEnv.outputPath('one', 'two')
+// = '/project/test/output/one/two'
+
+```
+
+#### `tmpOutputPath(suffix, ...extras)`
 
 Return a random tmp dir path in the output path
 
-### `randomHex(n)`
+```
+TestEnv.tmpOutputPath('blah', 'one', 'two')
+// = '/project/test/output/tmp-blah/one/two'
+
+```
+
+#### `randomHex(n)`
 
 Create a random hex string n chars long
 
-### `clean(dir)`
+```
+TestEnv.randomHex(5)
+// = 'c8fd2'
+
+```
+
+#### `clean(dir)`
 
 Promise to clean a directory that must be inside the base path.
 
 `DEBUG_CLEAN` makes this skip the rm
 
-### `cleanAllOutputAsync()`
 
-Clean everything in the `output/` dir
+#### `cleanAllOutputAsync()`
 
-### `cleanOutputAsync(subdir)`
+Promise to clean everything in the `output/` dir
 
-Clean a named `output/subdir`
 
-### `cleanAllOutputTmpAsync()`
+#### `cleanOutputAsync(subdir)`
 
-Cleans any `tmp-*` dirs created (Named with `tmp_output_dir_prefix`)
+Promise to clean a named `output/subdir`
 
-### `cleanOutputTmpAsync(suffix)`
 
-Clean a named `output/tmp-suffix` dir
+#### `cleanAllOutputTmpAsync()`
 
-### `mkdirOutputAsync(...args)`
+Promise to clean any `tmp-*` dirs created (Named with `tmp_output_dir_prefix`)
 
-### `mkdirOutputTmpAsync(suffix)`
 
-### `removeTmpPrefixFromPath(tmppath)`
+#### `cleanOutputTmpAsync(suffix)`
 
-### `copyAsync(src, dest, options)`
+Promise to clean a named `output/tmp-suffix` dir
 
-### `copyFixtureToTmpOutputAsync(fixture_suffix)`
 
-No output_suffix copies to a random output tmp dir
+#### `mkdirOutputAsync(...args)`
 
-No fixture suffix copies all fixtures to a random output tmp dir
+Promise to make the named directorys in `output/`.
+
+
+#### `mkdirOutputTmpAsync(suffix)`
+
+Promise to make a temp directory `output/tmp-${suffix}`.
+
+
+#### `removeTmpPrefixFromPath(tmppath)`
+
+Remove the current temp directory from a path
+
+```
+TestEnv.removeTmpPrefixFromPath('/project/test/output/tmp-output/whatever')
+// = 'output/whatever'
+```
+
+#### `copyAsync(src, dest, options)`
+
+Promise to copt a directory to a destination
+
+
+#### `copyFixtureToTmpOutputAsync(fixture_suffix)`
+
+Promise to copy a `fixture/` path to `output/tmp-{random}`
 
 
 ### `copyFixtureToOutputAsync(fixture_suffix, output_suffix)`
 
-No output_suffix copies directly to output
-No fixture suffix copies all fixtures to output
+Promise to copy a `fixture/` path to `output/`
+
+```
+TestEnv.copyFixtureToOutputAsync('config', 'somedir')
+// = cp -r /project/test/fixture/config /project/test/output/somedir
+```
 
 
 ## About
