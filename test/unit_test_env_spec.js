@@ -63,7 +63,7 @@ describe('Unit::deployable-test::TestEnv', function(){
     let test_env = null
 
     beforeEach(function(){
-      test_env = TestEnv.create( output_path )
+      test_env = TestEnv.setup( output_path )
     })
 
     it('should expose path.join as join', function(){
@@ -76,7 +76,7 @@ describe('Unit::deployable-test::TestEnv', function(){
     })
 
     it('should guess at a path when not given (taking node_modules/@deployable/test/lib into consideration)', function(){
-      test_env = TestEnv.create()
+      test_env = TestEnv.setup()
       let parentpath = path.resolve(__dirname, '..', '..', '..', '..')
       let testpath = path.join(parentpath, 'test', 'fixture', 'somesubdir')
       expect( test_env.fixturePath('somesubdir') ).to.equal( testpath )
@@ -105,13 +105,13 @@ describe('Unit::deployable-test::TestEnv', function(){
     it('should generate a random tmp path `test/output/tmp-xxxxx`', function(){
       let testpath = path.resolve(output_test_path, 'output', 'tmp-')
       let restpath_re = new RegExp(testpath)
-      expect( test_env.tmpOutputPath() ).to.match( restpath_re )
-      expect( test_env.tmpOutputPath() ).to.match( /[0-9a-f]{5}$/ )
+      expect( test_env.outputTmpPath() ).to.match( restpath_re )
+      expect( test_env.outputTmpPath() ).to.match( /[0-9a-f]{5}$/ )
     })
 
     it('should generate a fixed tmp path `test/output/tmp-ab`', function(){
       let testpath = path.resolve(output_test_path, 'output', 'tmp-ab')
-      expect( test_env.tmpOutputPath('ab') ).to.equal( testpath )
+      expect( test_env.outputTmpPath('ab') ).to.equal( testpath )
     })
 
     it('should return the same path if not a test path', function(){
@@ -119,7 +119,7 @@ describe('Unit::deployable-test::TestEnv', function(){
     })
 
     it('should return a tmp path without the tmp-', function(){
-      let tmppath = test_env.tmpOutputPath()
+      let tmppath = test_env.outputTmpPath()
       expect( test_env.removeTmpPrefixFromPath(tmppath) ).to.match(/^[0-9a-f]{5}$/)
     })
 
