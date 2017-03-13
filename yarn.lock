@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@deployable/errors@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.npmjs.org/@deployable/errors/-/errors-0.10.0.tgz#60308b296e2b5b421f741934f9eef090d0f5124f"
+
 abbrev@1, abbrev@1.0.x:
   version "1.0.9"
   resolved "https://registry.npmjs.org/abbrev/-/abbrev-1.0.9.tgz#91b4792588a7738c25f35dd6f63752a2f8776135"
