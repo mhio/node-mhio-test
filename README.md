@@ -9,9 +9,10 @@ after a test run.
 
 ## Install
 
+```bash
     npm install @deployable/test --save-dev
-
     yarn add @deployable/test --dev
+```
 
 ## Usage
 
