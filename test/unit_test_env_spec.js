@@ -76,11 +76,11 @@ describe('Unit::deployable-test::TestEnv', function(){
 
       let orig = process.env.DEBUG_CLEAN
 
-      before(function(){
+      before('override DEBUG_CLEAN', function(){
         process.env.DEBUG_CLEAN = 'true'
       })
 
-      after(function(){
+      after('reset DEBUG_CLEAN', function(){
         ( orig === undefined )
           ? delete process.env.DEBUG_CLEAN
           : process.env.DEBUG_CLEAN = orig
@@ -198,7 +198,7 @@ describe('Unit::deployable-test::TestEnv', function(){
 
       describe('copies', function(){
 
-        before(function(){
+        before('copies before copy', function(){
           debug('copies before copy', test_fixture_path, output_fixture_path)
           return fse.copyAsync(test_fixture_path, output_fixture_path)
         })
@@ -216,6 +216,23 @@ describe('Unit::deployable-test::TestEnv', function(){
           return TestEnv.copyFixtureToOutputAsync('copy', 'copyoutsuf').then(() => {
             expect(copied_file).to.be.a.file()
           })
+        })
+
+      })
+
+      describe('checks', function(){
+
+        before(function(){
+          debug('copies before copy', test_fixture_path, output_fixture_path)
+          return fse.copyAsync(test_fixture_path, output_fixture_path)
+        })
+
+        it('should find that `fixture/copy` exists with with checkFixturePath', function(){
+          return expect( TestEnv.checkFixturePath('copy') ).to.become(true)
+        })
+
+        it('should find that `fixture/copy#@Z` exists with checkFixturePath', function(){
+          return expect( TestEnv.checkFixturePath('copy#@Z') ).to.become(false)
         })
 
       })
