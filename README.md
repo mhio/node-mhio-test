@@ -16,19 +16,17 @@ after a test run.
 ## Usage
 
 ```javascript
-
 const { TestEnv } = require('@deployable/test')
 TestEnv.init(__dirname)                    // Should contain `fixture` and `output`
 let test_path = TestEnv.outputPath('bits') //=> /users/you/project/test/output/bits
 // ... do tests in `test_path`
 TestEnv.cleanOutput()
-
 ```
 
 Setting `DEBUG_CLEAN=true` in your environment prevents cleanup so
 you can inspect file after test runs
 
-```
+```shell
 DEBUG_CLEAN=true mocha -b
 ```
 
@@ -69,7 +67,7 @@ Joins all arguments with `path.join`
 Return a directory path from the `fixture/` path
 Joins all arguments with `path.join`
 
-```
+```javascript
 TestEnv.fixturePath('a', 'b')
 // = '/project/test/fixture/a/b'
 ```
@@ -79,7 +77,7 @@ TestEnv.fixturePath('a', 'b')
 Return a directory from the `output/` path
 Joins all arguments with `path.join`
 
-```
+```javascript
 TestEnv.outputPath('one', 'two')
 // = '/project/test/output/one/two'
 ```
@@ -88,7 +86,7 @@ TestEnv.outputPath('one', 'two')
 
 Return a random tmp dir path in the output path
 
-```
+```javascript
 TestEnv.tmpOutputPath('blah', 'one', 'two')
 // = '/project/test/output/tmp-blah/one/two'
 ```
@@ -97,7 +95,7 @@ TestEnv.tmpOutputPath('blah', 'one', 'two')
 
 Create a random hex string n chars long
 
-```
+```javascript
 TestEnv.randomHex(5)
 // = 'c8fd2'
 ```
@@ -143,7 +141,7 @@ Promise to make a temp directory `output/tmp-${suffix}`.
 
 Remove the current temp directory from a path
 
-```
+```javascript
 TestEnv.removeTmpPrefixFromPath('/project/test/output/tmp-output/whatever')
 // = 'output/whatever'
 ```
@@ -162,7 +160,7 @@ Promise to copy a `fixture/` path to `output/tmp-{random}`
 
 Promise to copy a `fixture/` path to `output/`
 
-```
+```javascript
 TestEnv.copyFixtureToOutputAsync('config', 'somedir')
 // = cp -r /project/test/fixture/config /project/test/output/somedir
 ```
