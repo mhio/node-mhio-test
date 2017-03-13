@@ -32,23 +32,24 @@ DEBUG_CLEAN=true mocha -b
 
 ## API
 
-- [init()](https://github.com/deployable/node-deployable-test#testenvinit-test_dir-)
-- [basePath()](https://github.com/deployable/node-deployable-test#basepathargs)
-- [fixturePath()](https://github.com/deployable/node-deployable-test#fixturepathargs)
-- [outputPath()](https://github.com/deployable/node-deployable-test#outputpathargs)
-- [tmpOutputPath()](https://github.com/deployable/node-deployable-test#tmpoutputpathsuffix-extras)
-- [randomHex()]()
-- [cleanAsync()]()
-- [cleanAllOutputAsync()]()
-- [cleanOutputAsync()]()
-- [cleanAllOutputTmpAsync()]()
-- [cleanOutputTmpAsync()]()
-- [mkdirOutputAsync()]()
-- [mkdirOutputTmpAsync()]()
-- [removeTmpPrefixFromPath()]()
-- [copyAsync()]()
-- [copyFixtureToTmpOutputAsync()]()
-- [copyFixtureToOutputAsync()]()
+- [init()](#testenvinit-test_dir-)
+- [basePath()](#basepathargs)
+- [fixturePath()](#fixturepathargs)
+- [outputPath()](#outputpathargs)
+- [tmpOutputPath()](#tmpoutputpathsuffix-extras)
+- [randomHex()](#randomhexn)
+- [cleanAsync()](#cleanasyncdir)
+- [cleanAllOutputAsync()](#cleanalloutputasync)
+- [cleanOutputAsync()](#cleanoutputasyncsubdir)
+- [cleanAllOutputTmpAsync()](#cleanalloutputtmpasync)
+- [cleanOutputTmpAsync()](#cleanoutputtmpasyncsuffix)
+- [mkdirOutputAsync()](#mkdiroutputasyncargs)
+- [mkdirOutputTmpAsync()](#mkdiroutputtmpasyncsuffix)
+- [removeTmpPrefixFromPath()](#removetmpprefixfrompathtmppath)
+- [copyAsync()](#copyasyncsrc-dest-options)
+- [copyFixtureToTmpOutputAsync()](#copyfixturetotmpoutputasyncfixture_suffix)
+- [copyFixtureToOutputAsync()](#copyfixturetooutputasyncfixture_suffix-output_suffix)
+
 ----
 #### `TestEnv.init( test_dir )`
 
