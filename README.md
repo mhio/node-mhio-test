@@ -57,12 +57,12 @@ Requires the path to your `test` directory that your
 `fixture` and `output` directories live under.
 This will normally be `__dirname` from where you required
 
-Options:
+Properties:
 
  - `base_path`<br>
-   The test base bath to use.
-   Take a guess if the user doesn't provide one.
-   The guess removes the `node_modules/@deployable/test/lib` dirs.
+    The test base bath to use.
+    Take a guess if the user doesn't provide one.
+    The guess removes the `node_modules/@deployable/test/lib` dirs.
 
  - `fixture_dir`<br>
     This directory with to be appended to `base_path` that contains your fixures.
