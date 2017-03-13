@@ -156,7 +156,7 @@ Promise to copt a directory to a destination
 Promise to copy a `fixture/` path to `output/tmp-{random}`
 
 
-### `copyFixtureToOutputAsync(fixture_suffix, output_suffix)`
+#### `copyFixtureToOutputAsync(fixture_suffix, output_suffix)`
 
 Promise to copy a `fixture/` path to `output/`
 
