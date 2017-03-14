@@ -42,7 +42,7 @@ describe('Unit::deployable-test::TestEnv', function(){
 
       describe('copies', function(){
 
-        it('should copy fixture files to a tmp output dir', function(){
+        xit('should copy fixture files to a tmp output dir', function(){
           return TestEnv.copyAsync(test_fixture_path, output_fixture_path)
           .then(res => {
             // use res as the tmp path is random
@@ -287,11 +287,11 @@ describe('Unit::deployable-test::TestEnv', function(){
           return expect( test_env.checkFixturePathAsync('copy') ).to.become(true)
         })
 
-        it('should find that `fixture/copy#@Z` exists with checkFixturePath', function(){
+        it('should find that `fixture/copy#@Z` doesn\'t exist with checkFixturePath', function(){
           expect( test_env.checkFixturePath('copy#@Z') ).to.be.false
         })
 
-        it('should find that `fixture/copy#@Z` exists with checkFixturePath', function(){
+        it('should find that `fixture/copy#@Z` doesn\'t exist with checkFixturePath', function(){
           return expect( test_env.checkFixturePathAsync('copy#@Z') ).to.become(false)
         })
 
