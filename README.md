@@ -55,25 +55,25 @@ DEBUG_CLEAN=true mocha -b
 
 ### TestEnv Path
 
-- [path()](#testenvinit-test_dir-)
-- [copy()](#testenvinit-test_dir-)
+- [path()](#path-test_dir-)
+- [copy()](#copy-test_dir-)
 
 #### TestEnv Output
 
-- [clean()](#testenvinit-test_dir-)
-- [copyTo()](#testenvinit-test_dir-)
+- [clean()](#copyto-test_dir-)
+- [copyTo()](#copyto-test_dir-s)
 
 #### TestEnv Fixture
 
-- [copyFrom()](#testenvinit-test_dir-)
+- [copyFrom()](#copyfrom-test_dir-)
 
 
 ### TestEnv
 
-- [#setup()](#testenvinit-test_dir-)
-- [#setupTestDir()](#testenvinit-test_dir-)
-- [#join()](#testenvinit-test_dir-)
-- [#resolve()](#testenvinit-test_dir-)
+- [TestEnv.setup()](#testenvsetup-test_dir-)
+- [TestEnv.setupTestDir()](#testenvsetuptestdir-test_dir-)
+- [TestEnv.join()](#testenvsetuptestdir-test_dir-)
+- [TestEnv.resolve()](#testenvsetuptestdir-test_dir-)
 - [basePath()](#basepathargs)
 - [fixturePath()](#fixturepathargs)
 - [outputPath()](#outputpathargs)
@@ -106,6 +106,14 @@ DEBUG_CLEAN=true mocha -b
 
 Promise to copy data to this Output or path from a Fixture or path
 
+
+----
+##### clean()
+
+Clean this TestEnvPath
+
+
+----
 #### TestEnv Fixture
 
 ----
