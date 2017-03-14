@@ -58,12 +58,12 @@ DEBUG_CLEAN=true mocha -b
 - [path()](#path-test_dir-)
 - [copy()](#copy-test_dir-)
 
-#### TestEnv Output
+#### Output
 
 - [clean()](#copyto-test_dir-)
 - [copyTo()](#copyto-test_dir-s)
 
-#### TestEnv Fixture
+#### Fixture
 
 - [copyFrom()](#copyfrom-test_dir-)
 
@@ -107,7 +107,6 @@ Promise to copy a file from a source to destination
 
 #### TestEnv Output
 
-----
 ##### `copyTo( source, destination )`
 
 Promise to copy data to this Output or path from a Fixture or path
@@ -128,7 +127,6 @@ Promise to clean up file system contents of this Path instance
 ----
 #### TestEnv Fixture
 
-----
 ##### `copyFrom( source, destination )`
 
 Promise to copy data from this Fixture or path to an Output or path
@@ -144,7 +142,6 @@ Source and destination can be:
 ----
 ### TestEnv
 
-----
 #### `TestEnv.setup( test_dir )`
 
 Requires the path to your `test` directory that your
