@@ -34,7 +34,7 @@
     "mocha": "^3.1.2"
   },
   "dependencies": {
-    "@deployable/errors": "^0.10.0",
+    "@deployable/errors": "^0.11.1",
     "bluebird": "^3.0.1",
     "debug": "^2",
     "fs-extra": "^2.0.0",
