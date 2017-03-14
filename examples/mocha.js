@@ -26,7 +26,7 @@ describe('tests', function(){
 
     it('should now have fixtures in the output directory', function(){
       let dir = out.path('subdir')
-      expect( dir ).to.be.a.directory().and.not.be.empty
+      expect( dir ).to.be.a.directory().with.contents(['firstfile'])
     })
 
     it('should write a file to output', function(){
