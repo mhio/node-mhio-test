@@ -161,12 +161,7 @@ describe('Unit::deployable-test::TestEnv', function(){
         return expect( p ).to.be.rejectedWith(/clean outside of project without force/)
       })
 
-      it('should fail to clean something outside our path', function(){
-        let p = test_env.cleanAsync('/tmp/non-existant-thing/134a24z94r24U1')
-        return expect( p ).to.be.rejectedWith(/clean outside of project without force/)
-      })
-
-      it('should fail to clean something outside our path .cleanAsync', function(){
+      it(`should fail to clean no path`, function(){
         let p = test_env.cleanAsync()
         return expect( p ).to.be.rejectedWith(/No dir to clean/)
       })
@@ -194,7 +189,7 @@ describe('Unit::deployable-test::TestEnv', function(){
       after(function(){
         // clean up output `output_path`
         if ( process.env.DEBUG_CLEAN ) return output_path
-        return fse.removeAsync( output_test_path )
+        if ( output_test_path.match(__dirname) ) return fse.removeAsync( output_test_path )
       })
 
       it('should make an output directory `output/test1` with mkdirOutputAsync', function(){
