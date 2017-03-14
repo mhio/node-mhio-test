@@ -91,7 +91,7 @@ DEBUG_CLEAN=true mocha -b
 - [copyFixtureToTmpOutputAsync()](#copyfixturetotmpoutputasyncfixture_suffix)
 - [copyFixtureToOutputAsync()](#copyfixturetooutputasyncfixture_suffix-output_suffix)
 
-### TestEnv Path
+### TestEnvPath
 
 ----
 ##### `.path( ...dirs )`
@@ -106,7 +106,7 @@ Promise to copy a file from a source to destination
 
 
 ----
-### Output
+### TestEnvPathOutput
 
 ##### `copyTo( source, destination )`
 
@@ -126,7 +126,7 @@ Promise to clean up file system contents of this Path instance
 
 
 ----
-### Fixture
+### TestEnvPathFixture
 
 ##### `copyFrom( source, destination )`
 
