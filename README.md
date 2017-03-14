@@ -16,12 +16,32 @@ after a test run.
 
 ## Usage
 
+See [examples](examples/README.md) for more
+
 ```javascript
-const { TestEnv } = require('@deployable/test')
-TestEnv.init(__dirname)                    // Should contain `fixture` and `output`
-let test_path = TestEnv.outputPath('bits') //=> /users/you/project/test/output/bits
-// ... do tests in `test_path`
-TestEnv.cleanOutput()
+let test_env, out
+
+before('Copy `files` from fixtures', function(){
+  test_env = TestEnv.setupTestDir(__dirname, { test_dir: 'examples' })
+  out = test_env.output('newdir')
+  return out.copyFrom('files', 'subdir')
+})
+
+after('Cleanup', function(){
+  return out.clean()
+})
+
+it('should now have fixtures in the output directory', function(){
+  let dir = out.path('subdir')
+  expect( dir ).to.be.a.directory().and.not.be.empty
+})
+
+it('should write a file to output', function(){
+  let file = out.path('subdir', 'testfile')
+  return fs.writeFileAsync(file, 'data\n').then( ()=> {
+    expect( path.join(__dirname,'output','newdir','subdir','testfile') ).to.be.a.file()
+  })
+})
 ```
 
 Setting `DEBUG_CLEAN=true` in your environment prevents cleanup so
