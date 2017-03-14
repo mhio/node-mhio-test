@@ -53,7 +53,27 @@ DEBUG_CLEAN=true mocha -b
 
 ## API
 
-- [init()](#testenvinit-test_dir-)
+### TestEnv Path
+
+- [path()](#testenvinit-test_dir-)
+- [copy()](#testenvinit-test_dir-)
+
+#### TestEnv Output
+
+- [clean()](#testenvinit-test_dir-)
+- [copyTo()](#testenvinit-test_dir-)
+
+#### TestEnv Fixture
+
+- [copyFrom()](#testenvinit-test_dir-)
+
+
+### TestEnv
+
+- [#setup()](#testenvinit-test_dir-)
+- [#setupTestDir()](#testenvinit-test_dir-)
+- [#join()](#testenvinit-test_dir-)
+- [#resolve()](#testenvinit-test_dir-)
 - [basePath()](#basepathargs)
 - [fixturePath()](#fixturepathargs)
 - [outputPath()](#outputpathargs)
@@ -71,8 +91,32 @@ DEBUG_CLEAN=true mocha -b
 - [copyFixtureToTmpOutputAsync()](#copyfixturetotmpoutputasyncfixture_suffix)
 - [copyFixtureToOutputAsync()](#copyfixturetooutputasyncfixture_suffix-output_suffix)
 
+### TestEnv Path
+
 ----
-#### `TestEnv.init( test_dir )`
+##### `.path( test_dir )`
+
+----
+##### `copy( test_dir )`
+
+#### TestEnv Output
+
+----
+##### `copyTo( test_dir )`
+
+Promise to copy data to this Output or path from a Fixture or path
+
+#### TestEnv Fixture
+
+----
+##### `copyFrom( test_dir )`
+
+Promise to copy data from this Fixture or path to an Output or path
+
+### TestEnv
+
+----
+#### `TestEnv.setup( test_dir )`
 
 Requires the path to your `test` directory that your
 `fixture` and `output` directories live under.
@@ -85,17 +129,27 @@ Properties:
     Take a guess if the user doesn't provide one.
     The guess removes the `node_modules/@deployable/test/lib` dirs.
 
+ - `test_dir`<br>
+    This directory will be appended to `base_path` that contains your tests.
+    Defaults to: `test`
+
  - `fixture_dir`<br>
-    This directory with to be appended to `base_path` that contains your fixures.
+    This directory will be appended to `test_dir` and contains your fixtures.
     Defaults to: `fixture`
 
  - `output_dir`<br>
-    This directory with to be appended to `base_path` to create tese output in.
+    This directory will be appended to `test_dir` for test output.
     Defaults to: `output`
 
 -  `tmp_output_dir_prefix`
     The prefix used for a temp dirs in output. Defaults to `tmp-`
 
+----
+#### `TestEnv.setupTestDir( test_dir )`
+
+Same as above but auto strips the test directory (`test_dir`) from the
+end of the provided path.
+Allows `TestEnv.setupTestDir( __dirname )` from test files
 
 ----
 #### `basePath(...args)`
