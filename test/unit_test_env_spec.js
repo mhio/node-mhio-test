@@ -133,6 +133,50 @@ describe('Unit::deployable-test::TestEnv', function(){
       expect( test_env.base_path ).to.equal( output_path + path.sep + 'atest' )
     })
 
+
+    describe('test env path objects', function(){
+
+      let tep
+
+      it('should create a fixture path', function(){
+        tep =  test_env.fixture()
+        expect( tep ).to.be.ok
+        expect( tep.base_path ).to.equal(output_fixture_path)
+      })
+
+      it('should create a fixture path', function(){
+        tep = test_env.fixture('subdir')
+        expect( tep ).to.be.ok
+        expect( tep.base_path ).to.equal(output_fixture_path + '/subdir')
+      })
+
+      it('should create an output path', function(){
+        tep = test_env.output()
+        expect( tep ).to.be.ok
+        expect( tep.base_path ).to.equal(output_output_path)
+      })
+
+      it('should create an output path', function(){
+        tep = test_env.output('subdir')
+        expect( tep ).to.be.ok
+        expect( tep.base_path ).to.equal(output_output_path + '/subdir')
+      })
+
+      it('should create a output tmp path', function(){
+        tep = test_env.outputTmp()
+        expect( tep ).to.be.ok
+        expect( tep.base_path ).to.contain(output_output_path + '/tmp-')
+      })
+
+      it('should create a output tmp path', function(){
+        tep = test_env.outputTmp('subdir')
+        expect( tep ).to.be.ok
+        expect( tep.base_path ).to.contain(output_output_path + '/tmp-')
+      })
+
+    })
+
+
     describe('fs DEBUG_CLEAN', function(){
 
       let orig = process.env.DEBUG_CLEAN
