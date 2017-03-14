@@ -6,9 +6,11 @@ const path = require('path')
 
 const { TestEnvStatic } = require('../')
 
+// Standard `output/` and `fixture/`
 let test_output_path = path.join(__dirname, 'output')
 let test_fixture_path = path.join(__dirname, 'fixture')
 
+// Tmp `output/` and `fixture/` to test with
 let output_path = path.join(test_output_path, require('crypto').randomBytes(2).toString('hex') )
 let output_test_path = path.join(output_path, 'test')
 let output_fixture_path = path.join(output_test_path, 'fixture')
