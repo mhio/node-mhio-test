@@ -105,7 +105,8 @@ Create a path from the base path of this Path instance
 Promise to copy a file from a source to destination
 
 
-#### TestEnv Output
+----
+### Output
 
 ##### `copyTo( source, destination )`
 
@@ -125,7 +126,7 @@ Promise to clean up file system contents of this Path instance
 
 
 ----
-#### TestEnv Fixture
+### Fixture
 
 ##### `copyFrom( source, destination )`
 
