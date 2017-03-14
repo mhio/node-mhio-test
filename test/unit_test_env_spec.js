@@ -123,6 +123,15 @@ describe('Unit::deployable-test::TestEnv', function(){
       expect( test_env.removeTmpPrefixFromPath(tmppath) ).to.match(/^[0-9a-f]{5}$/)
     })
 
+    it('should discard the last dir if it matches test_dir', function(){
+      test_env = TestEnv.setupTestDir( output_path + path.sep + 'test' )
+      expect( test_env.base_path ).to.equal( output_path )
+    })
+
+    it('should discard the last dir if it matches test_dir', function(){
+      test_env = TestEnv.setupTestDir( output_path + path.sep + 'atest' )
+      expect( test_env.base_path ).to.equal( output_path + path.sep + 'atest' )
+    })
 
     describe('fs DEBUG_CLEAN', function(){
 
