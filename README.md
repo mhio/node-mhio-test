@@ -94,33 +94,54 @@ DEBUG_CLEAN=true mocha -b
 ### TestEnv Path
 
 ----
-##### `.path( test_dir )`
+##### `.path( ...dirs )`
+
+Create a path from the base path of this Path instance
+
 
 ----
-##### `copy( test_dir )`
+##### `copy( source, destination )`
+
+Promise to copy a file from a source to destination
+
 
 #### TestEnv Output
 
 ----
-##### `copyTo( test_dir )`
+##### `copyTo( source, destination )`
 
 Promise to copy data to this Output or path from a Fixture or path
 
+Source and destination can be:
+
+ - `undefined`/`null` - Parents fixture path.
+ - `String`           - Parents fixture path + str
+ - `Array`            - Parents fixture path join with Array
+ - `TestEnvPath`      - TEP's base bath
 
 ----
-##### clean()
+##### `clean()`
 
-Clean this TestEnvPath
+Promise to clean up file system contents of this Path instance
 
 
 ----
 #### TestEnv Fixture
 
 ----
-##### `copyFrom( test_dir )`
+##### `copyFrom( source, destination )`
 
 Promise to copy data from this Fixture or path to an Output or path
 
+Source and destination can be:
+
+ - `undefined`/`null` - Parents fixture path.
+ - `String`           - Parents fixture path + str
+ - `Array`            - Parents fixture path join with Array
+ - `TestEnvPath`      - TEP's base bath
+
+
+----
 ### TestEnv
 
 ----
