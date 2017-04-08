@@ -67,7 +67,7 @@ describe('Unit::deployable::test::TestEnvPath', function(){
       })
 
       after('Cleanup', function(){
-        return out.clean()
+        return out.remove()
       })
 
       it('should now have fixtures in the output directory', function(){

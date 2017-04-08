@@ -18,10 +18,7 @@ populated and then cleaned up after a test run.
 
 ## Usage
 
-TestEnv defaults to expecting `./test` as the directory in your project that
-contains your tests.
-
-Fixtures are expected to be in `./test/fixtures`. Output goes into `./test/output`
+TestEnv expects `test` to contain you test files by default. Fixtures are expected to be in `test/fixture`. Output goes into `test/output`.
 
 These paths can be overridden when you setup your `TestEnv`.
 

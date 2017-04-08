@@ -200,6 +200,15 @@ describe('Unit::deployable-test::TestEnv', function(){
         })
       })
 
+      it('should remove an output directory `output/test3` via .removeOutputAsync', function(){
+        let testpath = path.resolve(output_test_path, 'output', 'test3')
+        expect(testpath).to.not.be.a.path('before')
+        return test_env.removeOutputAsync('test3').then(file => {
+          expect(file).to.equal(testpath)
+          expect(testpath).to.not.be.a.path('after')
+        })
+      })
+
       it('should fail to clean something outside our path', function(){
         let p = test_env.cleanAsync('/tmp/non-existant-thing/134a24z94r24U1')
         return expect( p ).to.be.rejectedWith(/clean outside of project without force/)
@@ -246,12 +255,24 @@ describe('Unit::deployable-test::TestEnv', function(){
       it('should clean an output directory `output/test2` with cleanOutputAsync', function(){
         let testpath = path.resolve(output_test_path, 'output', 'test2')
         expect(testpath).to.not.be.a.path('before')
-        return test_env.mkdirOutputAsync('test2').then(()=>{
-          expect(testpath).to.be.a.directory()
-          return test_env.cleanOutputAsync('test2')
-        }).then(()=>{
-          expect(testpath).to.not.be.a.path('after')
-        })
+        return test_env.mkdirOutputAsync('test2')
+          .then(()=>{
+            expect(testpath).to.be.a.directory()
+            return test_env.mkdirOutputAsync('test2/contents')
+          })
+          .then(()=> test_env.cleanOutputAsync('test2') )
+          .then(()=> expect(testpath).to.be.a.directory('after').and.empty )
+      })
+
+      it('should remove an output directory `output/test3` with removeOutputAsync', function(){
+        let testpath = path.resolve(output_test_path, 'output', 'test3')
+        expect(testpath).to.not.be.a.path('before')
+        return test_env.mkdirOutputAsync('test3')
+          .then(()=>{
+            expect(testpath).to.be.a.directory()
+            return test_env.removeOutputAsync('test3')
+          })
+          .then(()=> expect(testpath).to.not.be.a.path('after') )
       })
 
 
@@ -259,23 +280,35 @@ describe('Unit::deployable-test::TestEnv', function(){
         let testpath = path.resolve(output_test_path, 'output', 'tmp-cd')
         expect(testpath).to.not.be.a.path()
         return test_env.mkdirOutputTmpAsync('cd').then(()=>{
-          expect(testpath).to.be.a.directory()
-        })
+            expect(testpath).to.be.a.directory()
+          })
       })
 
       it('should clean a tmp output directory with cleanOutputTmpAsync', function(){
         let testpath = path.resolve(output_test_path, 'output', 'tmp-ef')
         expect(testpath).to.not.be.a.path('before')
-        return test_env.mkdirOutputTmpAsync('ef').then((temp_file)=> {
+        return test_env.mkdirOutputTmpAsync('ef').then(temp_file => {
           debug('temp_file',temp_file)
           expect(testpath).to.be.a.directory()
           return test_env.cleanOutputTmpAsync('ef')
-        }).then(()=>{
+        }).then(()=> {
+          expect(testpath).to.be.a.directory('after').and.empty
+        })
+      })
+
+      it('should remove a tmp output directory with cleanOutputTmpAsync', function(){
+        let testpath = path.resolve(output_test_path, 'output', 'tmp-eg')
+        expect(testpath).to.not.be.a.path('before')
+        return test_env.mkdirOutputTmpAsync('eg').then(temp_file => {
+          debug('temp_file',temp_file)
+          expect(testpath).to.be.a.directory()
+          return test_env.removeOutputTmpAsync('eg')
+        }).then(()=> {
           expect(testpath).to.not.be.a.path('after')
         })
       })
 
-      it('should clean all tmp output directories with cleanAllOutputTmpAsync', function(){
+      it('should remove all tmp output directories with cleanAllOutputTmpAsync', function(){
         let testpath_whatever = path.resolve(output_test_path, 'output', 'whatever')
         let testtmppath = path.resolve(output_test_path, 'output', 'tmp-gh')
         return Promise.all([
@@ -283,13 +316,13 @@ describe('Unit::deployable-test::TestEnv', function(){
           test_env.mkdirOutputTmpAsync(),
           test_env.mkdirOutputTmpAsync('gh')
         ])
-        .then((res)=>{
-          expect(testpath_whatever).to.be.a.directory()
-          expect(res[1]).to.be.a.directory()
-          expect(testtmppath).to.be.a.directory()
-          return test_env.cleanAllOutputTmpAsync()
+        .then(res => {
+          expect( testpath_whatever ).to.be.a.directory()
+          expect( res[1].path() ).to.be.a.directory()
+          expect( testtmppath ).to.be.a.directory()
+          return test_env.removeAllOutputTmpAsync()
         })
-        .then(()=>{
+        .then(()=> {
           expect(testpath_whatever).to.be.a.directory('whatever stays')
           expect(testtmppath).to.not.be.a.path('cleaned')
         })
