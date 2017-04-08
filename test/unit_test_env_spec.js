@@ -6,13 +6,13 @@ const path = require('path')
 
 const { TestEnv } = require('../')
 
-let test_output_path = path.join(__dirname, 'output')
-let test_fixture_path = path.join(__dirname, 'fixture')
+let test_output_path    = path.join(__dirname, 'output')
+let test_fixture_path   = path.join(__dirname, 'fixture')
 
-let output_path = path.join(test_output_path, require('crypto').randomBytes(2).toString('hex') )
-let output_test_path = path.join(output_path, 'test')
+let output_path         = path.join(test_output_path, require('crypto').randomBytes(2).toString('hex') )
+let output_test_path    = path.join(output_path, 'test')
 let output_fixture_path = path.join(output_test_path, 'fixture')
-let output_output_path = path.join(output_test_path, 'output')
+let output_output_path  = path.join(output_test_path, 'output')
 
 
 describe('Unit::deployable-test::TestEnv', function(){
@@ -63,7 +63,7 @@ describe('Unit::deployable-test::TestEnv', function(){
     let test_env = null
 
     beforeEach(function(){
-      test_env = TestEnv.setup( output_path )
+      test_env = TestEnv.setup({ base_path: output_path })
     })
 
     it('should expose path.join as join', function(){

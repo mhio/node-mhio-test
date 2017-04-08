@@ -4,8 +4,9 @@
 
 Collection of Node.js Test Helpers.
 
-`TestEnv` sets up up a read/write environment that can be easily cleaned up
-after a test run.
+`TestEnv` sets up up a read/write environment that can be easily accessed,
+populated and then cleaned up after a test run.
+
 
 ## Install
 
@@ -14,7 +15,15 @@ after a test run.
     yarn add @deployable/test --dev
 ```
 
+
 ## Usage
+
+TestEnv defaults to expecting `./test` as the directory in your project that
+contains your tests.
+
+Fixtures are expected to be in `./test/fixtures`. Output goes into `./test/output`
+
+These paths can be overridden when you setup your `TestEnv`.
 
 See [examples](examples/README.md) for more
 
@@ -22,8 +31,13 @@ See [examples](examples/README.md) for more
 let test_env, out
 
 before('Copy `files` from fixtures', function(){
-  test_env = TestEnv.setupTestDir(__dirname, { test_dir: 'examples' })
+  // Create a test environment from a file in your `test/` directory.
+  test_env = TestEnv.setupTestDir(__dirname)
+
+  // Create an output area called `newdir` in `test/output/newdir`.
   out = test_env.output('newdir')
+
+  // Copy `test/fixture/files` to `test/output/subdir`
   return out.copyFrom('files', 'subdir')
 })
 
@@ -45,7 +59,7 @@ it('should write a file to output', function(){
 ```
 
 Setting `DEBUG_CLEAN=true` in your environment prevents cleanup so
-you can inspect file after test runs
+you can inspect files after the tests have run.
 
 ```shell
 DEBUG_CLEAN=true mocha -b
@@ -90,6 +104,7 @@ DEBUG_CLEAN=true mocha -b
 - [copyAsync()](#copyasyncsrc-dest-options)
 - [copyFixtureToTmpOutputAsync()](#copyfixturetotmpoutputasyncfixture_suffix)
 - [copyFixtureToOutputAsync()](#copyfixturetooutputasyncfixture_suffix-output_suffix)
+
 
 ### TestEnvPath
 
@@ -143,16 +158,17 @@ Source and destination can be:
 ----
 ### TestEnv
 
-#### `TestEnv.setup( test_dir )`
+#### `TestEnv.setup( app_path )`
 
-Requires the path to your `test` directory that your
-`fixture` and `output` directories live under.
-This will normally be `__dirname` from where you required
+Requires the path to your app directory that contains `test`.
+The `fixture` and `output` directories will be in `test`.
+See `TestEnv.setupTestDir( __dirname )` for quicker setup from
+your inside your tests.
 
-Properties:
+Options
 
  - `base_path`<br>
-    The test base bath to use.
+    The project/apps base path.
     Take a guess if the user doesn't provide one.
     The guess removes the `node_modules/@deployable/test/lib` dirs.
 
@@ -174,9 +190,8 @@ Properties:
 ----
 #### `TestEnv.setupTestDir( test_dir )`
 
-Same as above but auto strips the test directory (`test_dir`) from the
-end of the provided path.
-Allows `TestEnv.setupTestDir( __dirname )` from test files
+Same as above but accepts the test directory instead of the app path.
+Allows `TestEnv.setupTestDir( __dirname )` from test files.
 
 ----
 #### `basePath(...args)`

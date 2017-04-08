@@ -20,7 +20,7 @@ describe('Unit::deployable::test::TestEnvPath', function(){
     let test_env
 
     before(function(){
-      test_env = new TestEnv( output_path )
+      test_env = new TestEnv({base_path: output_path})
     })
 
     it('should create a new TestEnvPath', function(){
