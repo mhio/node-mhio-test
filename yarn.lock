@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@deployable/errors@^0.11.3":
+"@deployable/errors@~0.11.3":
   version "0.11.3"
   resolved "https://registry.npmjs.org/@deployable/errors/-/errors-0.11.3.tgz#f6fb033f36ad6e80e796461cc282554bf87e1e9f"
 
