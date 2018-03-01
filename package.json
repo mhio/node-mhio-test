@@ -1,6 +1,6 @@
 {
   "name": "@deployable/test",
-  "version": "0.3.0-1",
+  "version": "0.3.0-2",
   "description": "Node Test Environment Helpers",
   "main": "lib/index.js",
   "scripts": {
