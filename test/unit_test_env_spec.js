@@ -31,6 +31,35 @@ describe('Unit::deployable-test::TestEnv', function(){
       expect( TestEnv.resolve(test_output_path,'a') ).to.equal( `${test_output_path}${path.sep}a` )
     })
 
+    it('should trimDirNameFromPath', function(){
+      expect( TestEnv.trimDirNameFromPath('/one/two', 'two') ).to.equal('/one')
+    })
+
+    it('should not trimDirNameFromPath', function(){
+      expect( TestEnv.trimDirNameFromPath('/one/three', 'two') ).to.equal('/one/three')
+    })
+
+    it('should trimUpToDirNameFromPath', function(){
+      expect( TestEnv.trimUpToDirNameFromPath('/one/two', 'two') ).to.equal('/one')
+    })
+
+    it('should trimUpToDirNameFromPath', function(){
+      expect( TestEnv.trimUpToDirNameFromPath('/one/two/three', 'two') ).to.equal('/one')
+    })
+
+    it('should trimUpToTwoDirNamesFromPath with no subdirs', function(){
+      expect( TestEnv.trimUpToTwoDirNamesFromPath('/one/two', 'two') ).to.equal('/one')
+    })
+
+    it('should trimUpToTwoDirNamesFromPath with 1 subdir', function(){
+      expect( TestEnv.trimUpToTwoDirNamesFromPath('/one/two/three', 'two') ).to.equal('/one')
+    })
+
+    it('should not trimUpToTwoDirNamesFromPath with 2 subdirecties', function(){
+      expect( TestEnv.trimUpToTwoDirNamesFromPath('/one/two/three/four', 'two') ).to.equal('/one/two/three/four')
+    })
+
+
 
     describe('fs', function(){
 
