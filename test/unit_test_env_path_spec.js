@@ -102,6 +102,30 @@ describe('Unit::deployable::test::TestEnvPath', function(){
         })
       })
 
+      it('should clean a TestEnvPath', function(){
+        return out.copyFrom('files', 'subdir')
+          .then(()=> {
+            expect( path.join(__dirname,'output','newdir','subdir') ).to.be.a.path()
+            return out.clean()
+          })
+          .then(()=>{
+            expect( out.path('subdir') ).to.not.be.a.path()
+            expect( path.join(__dirname,'output','newdir','subdir') ).to.not.be.a.path()
+          })
+      })
+
+      it('should remove a TestEnvPath', function(){
+        return out.copyFrom('files', 'subdir')
+          .then(()=> {
+            expect( path.join(__dirname,'output','newdir','subdir') ).to.be.a.path()
+            return out.remove()
+          })
+          .then(()=>{
+            expect( out.path('subdir') ).to.not.be.a.path()
+            expect( path.join(__dirname,'output','newdir','subdir') ).to.not.be.a.path()
+          })
+      })
+
     })
 
     describe('Fixture', function(){
