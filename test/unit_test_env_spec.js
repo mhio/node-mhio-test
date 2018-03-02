@@ -186,6 +186,13 @@ describe('Unit::deployable-test::TestEnv', function(){
       expect( test_env.base_path ).to.equal( output_path + path.sep + 'atest' )
     })
 
+    it('should join a base_path array for you', function(){
+      let arr_path = output_path.split(path.sep)
+      arr_path[0] = '/'
+      let te = TestEnv.setup({ base_path: arr_path })
+      expect( te.base_path ).to.equal( output_path )
+    })
+
 
     describe('test env path objects', function(){
 
@@ -449,7 +456,7 @@ describe('Unit::deployable-test::TestEnv', function(){
 
         before('copy before remove', function(){
           debug('copy before remove', test_fixture_path, output_remove_path)
-          return fse.copyAsync(test_fixture_path, output_remove_path).then(()=>{
+          return fse.copy(test_fixture_path, output_remove_path).then(()=>{
             expect(output_remove_path).to.be.a.path()
             remove_env = TestEnv.setup(output_remove_path)
           })
@@ -499,7 +506,7 @@ describe('Unit::deployable-test::TestEnv', function(){
 
         before('copy before clean', function(){
           debug('copy before clean', test_fixture_path, output_clean_path)
-          return fse.copyAsync(test_fixture_path, output_clean_path).then(()=>{
+          return fse.copy(test_fixture_path, output_clean_path).then(()=>{
             expect(output_clean_path).to.be.a.path()
             remove_env = TestEnv.setup(output_clean_path)
           })
@@ -546,7 +553,7 @@ describe('Unit::deployable-test::TestEnv', function(){
 
         before(function(){
           debug('copies before copy', test_fixture_path, output_fixture_path)
-          return fse.copyAsync(test_fixture_path, output_fixture_path)
+          return fse.copy(test_fixture_path, output_fixture_path)
         })
 
         it('should find that `fixture/copy` exists with with checkFixturePath', function(){
