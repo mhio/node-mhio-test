@@ -1,8 +1,10 @@
 /* global expect */
-const debug = require('debug')('dply:test:unit:test_env')
+const debug = require('debug')('dply:test:unit:TestEnvStatic')
 const Promise = require('bluebird')
-const fse = Promise.promisifyAll(require('fs-extra'))
+const mockfs = require('mock-fs')
 const path = require('path')
+
+const mockfsLoad = require('./fixture/mockfsLoad')
 
 const { TestEnvStatic } = require('../')
 
@@ -21,6 +23,32 @@ describe('Unit::deployable::test::TestEnvStatic', function(){
 
   describe('Static', function(){
 
+    before(function(){
+      let mockfs_config = null
+      before('mockfs', function(){
+        return mockfsLoad(test_fixture_path).then(config => {
+          mockfs_config = config
+          //expect(config).to.eql({})
+          mockfs(mockfs_config, { createCwd: false })
+          expect( test_fixture_path+'/copy' ).to.be.a.directory()
+          expect( test_fixture_path+'/copy/test1' ).to.be.a.file()
+          mockfs.restore()
+        })
+      })
+    })
+
+    after(function(){
+      mockfs.restore()
+    })
+
+    after('cleanup', function(){
+      expect(output_path).to.contain(__dirname)
+      return TestEnvStatic.removeAsync(output_path).then(res => {
+        expect(res).to.be.undefined
+        expect(output_path).to.not.be.a.path()
+      })
+    })
+
     it('should expose path.join as join', function(){
       expect( TestEnvStatic.join('test','a') ).to.equal( `test${path.sep}a` )
     })
@@ -32,15 +60,21 @@ describe('Unit::deployable::test::TestEnvStatic', function(){
       expect(TestEnvStatic.resolve('test')).to.equal(__dirname)
     })
 
-    it('should mkdirsAsync', function(){
-      return expect( TestEnvStatic.mkdirsAsync(output_path) ).to.become(output_path)
+    it('should mkdirsAsync the output path', function(){
+      return TestEnvStatic.mkdirsAsync(output_path).then(res => {
+        expect( output_path ).to.be.a.directory()
+        expect( res ).to.equal(output_path)
+      })
     })
 
-    it('should copyAsync', function(){
-      return expect( TestEnvStatic.copyAsync(test_fixture_path, output_path) ).to.become(undefined)
+    it('should copyAsync fixtures to output path', function(){
+      return TestEnvStatic.copyAsync(test_fixture_path, output_path).then(res =>{
+        expect( output_path ).to.be.a.directory()
+        expect( res ).to.be.undefined
+      })
     })
 
-    it('should copyAsync', function(){
+    it('should copyAsync ', function(){
       let src = TestEnvStatic.join(test_fixture_path,'files','firstfile')
       let dest = TestEnvStatic.join(output_path,'files')
       return TestEnvStatic.copyAsync(test_fixture_path, output_path).then(()=>{
@@ -50,15 +84,15 @@ describe('Unit::deployable::test::TestEnvStatic', function(){
     })
 
     it('should mkdirsAsync', function(){
-      return TestEnvStatic.mkdirsAsync(output_path).then(()=>{
-        return TestEnvStatic.mkdirsAsync(output_path)
-      }).then( res => expect( res ).to.be.null )
+      return TestEnvStatic.mkdirsAsync(output_path)
+        .then(()=> TestEnvStatic.mkdirsAsync(output_path))
+        .then( res => expect( res ).to.equal(output_path))
     })
 
     it('should mkdirsAsync', function(){
-      return TestEnvStatic.mkdirsAsync(output_path).then(()=>{
-        return TestEnvStatic.mkdirsAsync(output_path)
-      }).then( res => expect( res ).to.be.null )
+      return TestEnvStatic.mkdirsAsync(output_path)
+        .then(()=> TestEnvStatic.mkdirsAsync(output_path))
+        .then( res => expect( res ).to.equal(output_path))
     })
 
     it('should mkdirsAsync', function(){

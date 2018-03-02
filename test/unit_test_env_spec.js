@@ -1,9 +1,12 @@
 /* global expect */
-const debug = require('debug')('dply:test:unit:test_env')
+const debug = require('debug')('dply:test:unit:TestEnv')
 const Promise = require('bluebird')
-const fse = Promise.promisifyAll(require('fs-extra'))
 const path = require('path')
+//const mockfs = require('mock-fs')
+const fse = require('fs-extra')
+const fs = require('fs')
 
+//const mockfsLoad = require('./fixture/mockfsLoad')
 const { TestEnv } = require('../')
 
 let test_output_path    = path.join(__dirname, 'output')
@@ -15,7 +18,26 @@ let output_fixture_path = path.join(output_test_path, 'fixture')
 let output_output_path  = path.join(output_test_path, 'output')
 
 
+
 describe('Unit::deployable-test::TestEnv', function(){
+
+  //let mockfs_config = null
+
+  // before('mockfs', function(){
+  //   return mockfsLoad(test_fixture_path).then(config => {
+  //     debug('mockfsconfig', JSON.stringify(config['/Users']['matt']['clones']))
+  //     mockfs_config = config
+  //     //expect(config).to.eql({})
+  //     mockfs(mockfs_config, { createCwd: false })
+  //     let tpath = test_fixture_path + '/copy'
+  //     expect( fs.existsSync(tpath), tpath ).to.be.true
+  //     expect( require('fs').existsSync(tpath), tpath ).to.be.true
+  //     expect( fse.pathExistsSync(tpath), tpath ).to.be.true
+  //     expect( tpath ).to.be.a.directory()
+  //     expect( test_fixture_path+'/copy/test1' ).to.be.a.file()
+  //     mockfs.restore()
+  //   })
+  // })
 
   describe('Static', function(){
 
@@ -61,17 +83,19 @@ describe('Unit::deployable-test::TestEnv', function(){
 
 
 
-    describe('fs', function(){
+    xdescribe('fs', function(){
 
-      after(function(){
-        // clean up output `output_path`
-        if ( process.env.DEBUG_CLEAN ) return output_path
-        return fse.removeAsync( output_path )
-      })
+      // before(function(){
+      //   mockfs(mockfs_config, { createCwd: false })
+      // })
+
+      // after(function(){
+      //   mockfs.restore()
+      // })
 
       describe('copies', function(){
 
-        xit('should copy fixture files to a tmp output dir', function(){
+        it('should copy fixture files to a tmp output dir', function(){
           return TestEnv.copyAsync(test_fixture_path, output_fixture_path)
           .then(res => {
             // use res as the tmp path is random
@@ -210,6 +234,14 @@ describe('Unit::deployable-test::TestEnv', function(){
 
       let orig = process.env.DEBUG_CLEAN
 
+      // before(function(){
+      //   mockfs(mockfs_config, { createCwd: false })
+      // })
+
+      // after(function(){
+      //   mockfs.restore()
+      // })
+
       before('override DEBUG_CLEAN', function(){
         process.env.DEBUG_CLEAN = 'true'
       })
@@ -241,14 +273,15 @@ describe('Unit::deployable-test::TestEnv', function(){
       it('should fail to clean something outside our path', function(){
         let p = test_env.cleanAsync('/tmp/non-existant-thing/134a24z94r24U1')
         return expect( p ).to.be.rejectedWith(/clean outside of project without force/)
+        //return p.catch(err => expect( err.message ).to.be.match(/clean outside of project without force/))
       })
 
-      it(`should fail to clean no path`, function(){
+      xit('should fail to clean no path', function(){
         let p = test_env.cleanAsync()
         return expect( p ).to.be.rejectedWith(/No dir to clean/)
       })
 
-      it(`should fail to clean a path that's not a string via .cleanAsync`, function(){
+      it('should fail to clean a path that\'s not a string via .cleanAsync', function(){
         let p = test_env.cleanAsync([])
         return expect( p ).to.be.rejectedWith(/directory must be a string/)
       })
@@ -261,6 +294,7 @@ describe('Unit::deployable-test::TestEnv', function(){
       it('should clean the whole output dir with cleanAllOutputAsync', function(){
         let p = test_env.cleanAllOutputAsync()
         return expect( p ).to.be.become( path.join(output_test_path, 'output') )
+        //return p.then(res => expect( res ).to.equal( path.join(output_test_path, 'output') ))
       })
 
     })
@@ -268,10 +302,18 @@ describe('Unit::deployable-test::TestEnv', function(){
 
     describe('fs', function(){
 
+      // before(function(){
+      //   mockfs(mockfs_config, { createCwd: false })
+      // })
+
+      // after(function(){
+      //   mockfs.restore()
+      // })
+
       after(function(){
         // clean up output `output_path`
         if ( process.env.DEBUG_CLEAN ) return output_path
-        if ( output_test_path.match(__dirname) ) return fse.removeAsync( output_test_path )
+        //if ( output_test_path.match(__dirname) ) return fse.removeAsync( output_test_path )
       })
 
       it('should make an output directory `output/test1` with mkdirOutputAsync', function(){
@@ -362,10 +404,20 @@ describe('Unit::deployable-test::TestEnv', function(){
 
         before('copies before copy', function(){
           debug('copies before copy', test_fixture_path, output_fixture_path)
-          return fse.copyAsync(test_fixture_path, output_fixture_path)
+          return fse.copy(test_fixture_path, output_fixture_path)
+            .then(()=>{
+              debug('copies before copy in copy', test_fixture_path, output_fixture_path)
+              expect(output_fixture_path).to.be.a.directory()
+              expect(output_fixture_path+'/copy').to.be.a.directory()
+              debug('output_fixture_path',output_fixture_path)
+            })
+            .catch(err => { console.error(err); throw err })
         })
 
         it('should copy fixture files to a tmp output dir', function(){
+          expect(output_fixture_path+'/copy').to.be.a.directory()
+          expect(output_fixture_path+'/copy/test1').to.be.a.file()
+          debug(output_fixture_path+'/copy')
           return test_env.copyFixtureToTmpOutputAsync('copy').then(res => {
             // use res as the tmp path is random
             expect( res ).to.be.a.directory()
@@ -382,7 +434,65 @@ describe('Unit::deployable-test::TestEnv', function(){
 
       })
 
+      describe('removeAsync', function(){
+
+        let remove_env = null
+        let output_remove_path = path.join(output_path, 'remove')
+
+        // before(function(){
+        //   mockfs(mockfs_config, { createCwd: false })
+        // })
+
+        // after(function(){
+        //   mockfs.restore()
+        // })
+
+        before('copy before remove', function(){
+          debug('copy before remove', test_fixture_path, output_remove_path)
+          return fse.copyAsync(test_fixture_path, output_remove_path).then(()=>{
+            expect(output_remove_path).to.be.a.path()
+            remove_env = TestEnv.setup(output_remove_path)
+          })
+        })
+
+        it('should fail to remove null', function(){
+          return remove_env.removeAsync().catch(err => {
+            expect(output_remove_path).to.be.a.path()
+            expect(err.message).to.match(/No dir to remove/)
+          })
+        })
+
+        it('should fail to remove a number', function(){
+          return remove_env.removeAsync(1).catch(err => {
+            expect(output_remove_path).to.be.a.path()
+            expect(err.message).to.match(/directory must be a string/)
+          })
+        })
+
+        it('should fail to remove a number', function(){
+          return remove_env.removeAsync('/some/other/path/that/should/never/exists/so/we/add/some/more/dirs/just/in/case/yep/asdfqwer-asdf').catch(err => {
+            expect(output_remove_path).to.be.a.path()
+            expect(err.message).to.match(/outside of project without force option/)
+          })
+        })
+
+        it('should remove a file', function(){
+          return remove_env.removeAsync(output_remove_path).then(()=> {
+            expect(output_remove_path).to.not.be.a.path()
+          })
+        })
+
+      })
+
       describe('checks', function(){
+
+        // before(function(){
+        //   mockfs(mockfs_config, { createCwd: false })
+        // })
+
+        // after(function(){
+        //   mockfs.restore()
+        // })
 
         before(function(){
           debug('copies before copy', test_fixture_path, output_fixture_path)
