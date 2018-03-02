@@ -484,6 +484,56 @@ describe('Unit::deployable-test::TestEnv', function(){
 
       })
 
+      describe('clean', function(){
+
+        let remove_env = null
+        let output_clean_path = path.join(output_path, 'clean-fO3e')
+
+        // before(function(){
+        //   mockfs(mockfs_config, { createCwd: false })
+        // })
+
+        // after(function(){
+        //   mockfs.restore()
+        // })
+
+        before('copy before clean', function(){
+          debug('copy before clean', test_fixture_path, output_clean_path)
+          return fse.copyAsync(test_fixture_path, output_clean_path).then(()=>{
+            expect(output_clean_path).to.be.a.path()
+            remove_env = TestEnv.setup(output_clean_path)
+          })
+        })
+
+        it('should fail to remove null', function(){
+          return remove_env.removeAsync().catch(err => {
+            expect(output_clean_path).to.be.a.path()
+            expect(err.message).to.match(/No dir to remove/)
+          })
+        })
+
+        it('should fail to remove a number', function(){
+          return remove_env.removeAsync(1).catch(err => {
+            expect(output_clean_path).to.be.a.path()
+            expect(err.message).to.match(/directory must be a string/)
+          })
+        })
+
+        it('should fail to remove a number', function(){
+          return remove_env.removeAsync('/some/other/path/that/should/never/exists/so/we/add/some/more/dirs/just/in/case/yep/asdfqwer-asdf').catch(err => {
+            expect(output_clean_path).to.be.a.path()
+            expect(err.message).to.match(/outside of project without force option/)
+          })
+        })
+
+        it('should remove a file', function(){
+          return remove_env.removeAsync(output_clean_path).then(()=> {
+            expect(output_clean_path).to.not.be.a.path()
+          })
+        })
+
+      })
+
       describe('checks', function(){
 
         // before(function(){
