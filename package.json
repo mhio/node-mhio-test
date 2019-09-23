@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "test:debug": "DEBUG='*' mocha debug",
-    "test:coverage": "nyc cover _mocha && nyc check-coverage",
+    "test:coverage": "set -uex; nyc _mocha; nyc report -r html; nyc check-coverage",
+    "test:watch": "nodemon -x 'mocha --bail || exit 1'",
     "release:test": "set -uex; yarn test; npm version prerelease; npm publish --tag testing --access public",
     "release:patch": "set -uex; rm -rf node_modules; yarn; yarn run test:coverage; npm version patch; git push; npm publish --access public; git push --tags"
   },
