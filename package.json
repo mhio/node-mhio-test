@@ -1,6 +1,6 @@
 {
   "name": "@mhio/test",
-  "version": "0.4.3-0",
+  "version": "0.4.3",
   "description": "Node Test Environment Helpers",
   "main": "lib/index.js",
   "scripts": {
