@@ -1,6 +1,6 @@
-# [Deployable Test Helpers](https://github.com/deployable/node-deployable-test)
+# [Node Test Helpers](https://github.com/mhio/node-mhio-test)
 
-## @deployable/test
+## @mhio/test
 
 Collection of Node.js Test Helpers.
 
@@ -11,8 +11,8 @@ populated and then cleaned up after a test run.
 ## Install
 
 ```bash
-    npm install @deployable/test --save-dev
-    yarn add @deployable/test --dev
+    npm install @mhio/test --save-dev
+    yarn add @mhio/test --dev
 ```
 
 
@@ -167,7 +167,7 @@ Options
  - `base_path`<br>
     The project/apps base path.
     Take a guess if the user doesn't provide one.
-    The guess removes the `node_modules/@deployable/test/lib` dirs.
+    The guess removes the `node_modules/@mhio/test/lib` dirs.
 
  - `test_dir`<br>
     This directory will be appended to `base_path` that contains your tests.
@@ -325,9 +325,9 @@ TestEnv.copyFixtureToOutputAsync('config', 'somedir')
 
 ## About
 
-@deployable/test is released under the MIT license.
+@mhio/test is released under the MIT license.
 
-Copyright 2017 Matt Hoyle - code at deployable.co
+Copyright 2019 mhio
 
-https://github.com/deployable/node-deployable-test
+https://github.com/mhio/node-mhio-test
 
