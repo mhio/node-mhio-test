@@ -1,5 +1,5 @@
 /* global expect */
-const debug = require('debug')('dply:test:unit:TestEnvStatic')
+const debug = require('debug')('mhio:test:unit:TestEnvStatic')
 const Promise = require('bluebird')
 const mockfs = require('mock-fs')
 const path = require('path')
@@ -19,7 +19,7 @@ let output_fixture_path = path.join(output_test_path, 'fixture')
 let output_output_path = path.join(output_test_path, 'output')
 
 
-describe('Unit::deployable::test::TestEnvStatic', function(){
+describe('Unit::mhio::test::TestEnvStatic', function(){
 
   describe('Static', function(){
 

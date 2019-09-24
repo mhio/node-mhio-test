@@ -1,4 +1,4 @@
-const debug = require('debug')('dply:test:helper:mockfsLoad')
+const debug = require('debug')('mhio:test:helper:mockfsLoad')
 const klaw = require('klaw')
 const Promise = require('bluebird')
 const path = require('path')

@@ -1,14 +1,14 @@
-# [Examples](https://github.com/deployable/node-deployable-test)
+# [Examples](https://github.com/mhio/node-mhio-test)
 
-## @deployable/test
+## @mhio/test
 
 mocha
 
 ## About
 
-@deployable/test is released under the MIT license.
+@mhio/test is released under the MIT license.
 
-Copyright 2017 Matt Hoyle - code at deployable.co
+Copyright 2017 Matt Hoyle - code at mhio.co
 
-https://github.com/deployable/node-deployable-test
+https://github.com/mhio/node-mhio-test
 

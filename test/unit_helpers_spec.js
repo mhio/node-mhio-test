@@ -3,7 +3,7 @@ const { array, arrayOnNil } = require('../lib/ensure_array')
 const randomHex = require('../lib/random_hex')
 
 
-describe('Unit::deployable::test::helpers', function(){
+describe('Unit::mhio::test::helpers', function(){
 
   describe('array', function(){
 

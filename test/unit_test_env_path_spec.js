@@ -1,5 +1,5 @@
 /* global expect */
-const debug = require('debug')('dply:test:unit:test_env_path')
+const debug = require('debug')('mhio:test:unit:test_env_path')
 const path = require('path')
 const Promise = require('bluebird')
 const fse = Promise.promisifyAll(require('fs-extra'))
@@ -13,7 +13,7 @@ let output_fixture_path = path.join(output_path, 'fixture')
 let output_output_path = path.join(output_path, 'output')
 
 
-describe('Unit::deployable::test::TestEnvPath', function(){
+describe('Unit::mhio::test::TestEnvPath', function(){
 
   describe('Class', function(){
 

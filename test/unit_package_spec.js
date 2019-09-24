@@ -1,6 +1,6 @@
 const pkg = require('../')
 
-describe('Unit::deployable-test', function(){
+describe('Unit::mhio-test', function(){
 
   describe('Package should load modules', function(){
   

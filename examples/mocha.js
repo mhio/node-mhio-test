@@ -5,7 +5,7 @@ chai.use(require('chai-fs'))
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
 
-const { TestEnv } = require('@deployable/test')
+const { TestEnv } = require('@mhio/test')
 
 
 describe('tests', function(){

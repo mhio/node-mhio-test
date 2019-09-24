@@ -1,5 +1,5 @@
 /* global expect */
-const debug = require('debug')('dply:test:unit:TestEnv')
+const debug = require('debug')('mhio:test:unit:TestEnv')
 const Promise = require('bluebird')
 const path = require('path')
 //const mockfs = require('mock-fs')
@@ -19,7 +19,7 @@ let output_output_path  = path.join(output_test_path, 'output')
 
 
 
-describe('Unit::deployable-test::TestEnv', function(){
+describe('Unit::mhio-test::TestEnv', function(){
 
   //let mockfs_config = null
 
@@ -128,7 +128,7 @@ describe('Unit::deployable-test::TestEnv', function(){
         .to.equal( `${test_output_path}${path.sep}a` )
     })
 
-    it('should guess at a path when not given (taking node_modules/@deployable/test/lib into consideration)', function(){
+    it('should guess at a path when not given (taking node_modules/@mhio/test/lib into consideration)', function(){
       test_env = TestEnv.setup()
       let parentpath = path.resolve(__dirname, '..', '..', '..', '..')
       let testpath = path.join(parentpath, 'test', 'fixture', 'somesubdir')
