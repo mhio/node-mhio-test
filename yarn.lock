@@ -90,10 +90,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@mhio/exception@0.2.1-2":
-  version "0.2.1-2"
-  resolved "https://registry.npmjs.org/@mhio/exception/-/exception-0.2.1-2.tgz#729e7b94087c840fe3eb746121548c6497ab8994"
-  integrity sha512-q/akfPwgI9oMLZk/gILjYIaiBYiyLOE9c+iiRQG+VP0wr6lLGBVgi41O7TeeIQr2AYJgHKtMIY+UKusiw2sUjw==
+"@mhio/exception@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.npmjs.org/@mhio/exception/-/exception-0.2.1.tgz#054c27f09bb7bb1d48461ab707a931873e12f9d9"
+  integrity sha512-nhdUeHjIV8SwQXHucQHXjIltt8Cndw9iNiyejdAcPtZKro6W8MYbdOxdz9Q+T+yWntC9ub7rRMWDcao5sBpbDw==
 
 ansi-colors@3.2.3:
   version "3.2.3"
