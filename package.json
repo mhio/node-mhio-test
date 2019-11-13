@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@mhio/exception": "^0.2.1",
-    "bluebird": "^3.0.1",
+    "bluebird": "~3.7.1",
     "debug": "^4.1.1",
     "fs-extra": "^8.1.0",
     "klaw": "^3.0.0",
